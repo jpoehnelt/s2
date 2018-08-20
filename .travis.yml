@@ -1,0 +1,22 @@
+language: python
+
+matrix:
+  include:
+    # - sudo: required
+    #   services:
+    #     - docker
+    - os: osx
+      language: generic
+
+install:
+  - if [ "${TRAVIS_OS_NAME:-}" == "osx" ]; then
+      brew update;
+      brew install s2geometry.rb
+      cp -r $(brew --prefix)/Cellar/s2geometry/0.0/lib/python2.7/site-packages/ .
+    fi
+script:
+  - $PIP install cibuildwheel==0.9.4
+  - cibuildwheel --output-dir wheelhouse
+
+
+  
